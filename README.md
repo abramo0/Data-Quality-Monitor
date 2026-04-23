@@ -55,6 +55,7 @@ Configuration:
 
 ## 📁 Project Structure
 
+```bash
 data-quality-monitor/
 │
 ├── src/
@@ -72,8 +73,8 @@ data-quality-monitor/
 │   │   ├── generator.py
 │   │
 │   ├── utils/
-│   │   ├── config.py
-│   │   ├── logger.py
+│       ├── config.py
+│       ├── logger.py
 │
 ├── data/
 │   ├── raw/
