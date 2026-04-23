@@ -92,6 +92,8 @@ data-quality-monitor/
 ├── requirements.txt
 └── README.md
 
+```
+
 ---
 
 ## ⚙️ How It Works
