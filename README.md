@@ -1,43 +1,137 @@
 # 📊 Data Quality Monitor
 
-## 🚀 Overview
-
-Data Quality Monitor is a Python-based data observability tool designed to evaluate and monitor the quality of datasets used in machine learning and data engineering workflows.
-
-It detects common data issues such as missing values, outliers, schema inconsistencies, and basic data drift, helping ensure reliable and clean datasets before they are used in ML pipelines.
+A lightweight Python tool to automatically detect data quality issues before they break your machine learning pipelines.
 
 ---
 
-## 🎯 Problem Statement
+## 🚀 Overview
 
-In real-world data science and machine learning systems, poor data quality is one of the main causes of model degradation and unreliable predictions.
+Data Quality Monitor is a data observability tool designed to evaluate and monitor the quality of datasets used in machine learning and data engineering workflows.
 
-This project addresses the need for:
-- Automated dataset validation
-- Early detection of data issues
-- Reliable preprocessing workflows before model training
+It detects common data issues such as missing values, outliers, schema inconsistencies, and data drift — ensuring datasets are reliable before entering production pipelines.
+
+---
+
+## 🎯 Why This Project Matters
+
+Poor data quality is one of the leading causes of model failure in real-world systems.
+
+This tool helps to:
+
+- Detect data issues early  
+- Prevent unreliable ML predictions  
+- Standardize dataset validation workflows  
+- Improve overall data reliability in pipelines  
 
 ---
 
 ## ⚙️ Features
 
-- Missing values detection and summary report  
+- Missing values detection and summary reports  
 - Outlier detection using statistical methods (IQR)  
-- Schema validation (column type and consistency checks)  
-- Basic data drift detection (distribution comparison)  
+- Schema validation (type consistency checks)  
+- Basic data drift detection  
 - Automated data quality report generation  
 
 ---
 
-## 🧱 Project Architecture
+## 🧱 Architecture
 
-CSV Dataset → Data Loader → Validation Engine → Metrics Engine → Report Generator → Final Data Quality Report
+CSV → Data Loader → Validation Engine → Metrics Engine → Report Generator → Output Report
 
-Metrics Engine includes:
+Metrics Engine:
 - Missing Values Check  
 - Outlier Detection  
 - Schema Validation  
 - Drift Detection  
+
+---
+
+## 🚀 Quick Start
+
+### 1. Clone the repository
+
+git clone https://github.com/yourusername/data-quality-monitor.git  
+cd data-quality-monitor  
+
+---
+
+### 2. Install dependencies
+
+pip install -r requirements.txt  
+
+---
+
+### 3. Run the project
+
+python main.py --config configs/config.yaml  
+
+---
+
+## ⚙️ How It Works
+
+1. Load dataset from CSV file  
+2. Run validation checks:
+   - Missing values analysis  
+   - Outlier detection (IQR method)  
+   - Schema consistency validation  
+   - Basic data drift detection  
+3. Compute data quality metrics  
+4. Generate a structured report  
+
+---
+
+## 📊 Example Output
+
+DATA QUALITY REPORT  
+-------------------  
+Missing Values: OK  
+Outliers: WARNING (2 columns affected)  
+Schema: OK  
+Drift: DETECTED  
+
+Final Score: 78/100  
+Status: ⚠️ Needs Attention  
+
+---
+
+## 📁 Project Structure
+
+data-quality-monitor/
+
+├── src/  
+│   ├── core/  
+│   │   ├── loader.py  
+│   │   ├── validator.py  
+│   │   ├── drift.py  
+│  
+│   ├── metrics/  
+│   │   ├── missing.py  
+│   │   ├── outliers.py  
+│   │   ├── schema.py  
+│  
+│   ├── report/  
+│   │   ├── generator.py  
+│  
+│   ├── utils/  
+│       ├── config.py  
+│       ├── logger.py  
+
+├── data/  
+│   ├── raw/  
+│   └── processed/  
+
+├── configs/  
+│   └── config.yaml  
+
+├── notebooks/  
+│   └── exploration.ipynb  
+
+├── tests/  
+
+├── main.py  
+├── requirements.txt  
+└── README.md  
 
 ---
 
@@ -53,96 +147,40 @@ Configuration:
 
 ---
 
-## 📁 Project Structure
-
-```bash
-data-quality-monitor/
-│
-├── src/
-│   ├── core/
-│   │   ├── loader.py
-│   │   ├── validator.py
-│   │   ├── drift.py
-│   │
-│   ├── metrics/
-│   │   ├── missing.py
-│   │   ├── outliers.py
-│   │   ├── schema.py
-│   │
-│   ├── report/
-│   │   ├── generator.py
-│   │
-│   ├── utils/
-│       ├── config.py
-│       ├── logger.py
-│
-├── data/
-│   ├── raw/
-│   └── processed/
-│
-├── configs/
-│   └── config.yaml
-│
-├── notebooks/
-│   └── exploration.ipynb
-│
-├── tests/
-│
-├── main.py
-├── requirements.txt
-└── README.md
-
-```
-
----
-
-## ⚙️ How It Works
-
-1. Load dataset (CSV file)  
-2. Run validation checks:
-   - Missing values analysis  
-   - Outlier detection  
-   - Schema consistency checks  
-   - Basic drift detection  
-3. Compute data quality metrics  
-4. Generate structured report  
-
----
-
-## 📊 Example Output
-
-DATA QUALITY REPORT
---------------------
-Missing Values: OK  
-Outliers: WARNING (2 columns affected)  
-Schema: OK  
-Drift: DETECTED  
-
-Final Score: 78/100  
-Status: ⚠️ NEEDS ATTENTION  
-
----
-
 ## 🚀 Future Improvements
 
+- Advanced drift detection (KS test, PSI)  
 - Machine learning-based anomaly detection  
 - Real-time data monitoring system  
-- Advanced drift detection (KS test, PSI)  
 - Web dashboard (Streamlit)  
 - API layer using FastAPI  
-- Integration with data pipelines (ETL systems)  
+- Integration with ETL pipelines  
 
 ---
 
-## 🧠 Key Learnings
+## 🤝 Contributing
 
-This project demonstrates:
+Contributions are welcome. Feel free to open issues or submit pull requests.
 
-- Data quality validation techniques used in production systems  
-- Modular Python architecture design  
-- Data engineering pipeline thinking  
-- Early-stage data observability concepts  
-- Preparation for real-world ML systems  
+---
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+Copyright (c) 2026 Abramo Azer
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
 
 ---
 
@@ -156,4 +194,4 @@ Focused on building scalable data systems and machine learning pipelines
 
 ## 📌 Status
 
-In Development — core modules being implemented
+In Development — core modules are currently being implemented
