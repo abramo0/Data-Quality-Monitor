@@ -32,7 +32,7 @@ def main():
     results = validate(df)
 
     # 3. Generate report
-    generate_report(results)
+    ReportGenerator(results)
 
 
 if __name__ == "__main__":
