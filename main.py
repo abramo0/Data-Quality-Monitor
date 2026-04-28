@@ -2,7 +2,7 @@ import argparse
 
 from src.core.loader import DataLoader
 from src.core.validator import validate
-from src.report.generator import generate_report
+from src.report.generator import ReportGenerator
 
 
 def parse_args():
