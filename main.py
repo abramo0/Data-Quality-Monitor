@@ -1,16 +1,29 @@
+import argparse
+
 from src.core.loader import DataLoader
 from src.core.validator import validate
 from src.report.generator import generate_report
 
 
+def parse_args():
+    parser = argparse.ArgumentParser(description="Data Quality Monitor")
+    parser.add_argument(
+        "--file",
+        type=str,
+        required=True,
+        help="Path to the CSV file"
+    )
+    return parser.parse_args()
+
+
 def main():
-    path = "data/raw/data.csv"
+    args = parse_args()
+    path = args.file
 
     # 1. Load data
     loader = DataLoader(path)
     df = loader.load_csv()
 
-    # sicurezza
     if df is None:
         print("[ERROR] Data loading failed. Exiting...")
         return
