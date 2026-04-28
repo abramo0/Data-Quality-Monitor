@@ -1,9 +1,11 @@
-from src.metrics.missing import check_missing
+from src.metrics.missing import MissingValuesChecker
 
 def validate(df):
     results = {}
 
     # Missing values
-    results["missing"] = check_missing(df)
+    missing_checker = MissingValuesChecker(df)
+    results["missing"] = missing_checker.analyze()
+    results["missing_summary"] = missing_checker.summary()
 
     return results
