@@ -50,23 +50,37 @@ Metrics Engine:
 ## 🚀 Quick Start
 
 ### 1. Clone the repository
+```bash
+git clone https://github.com/yourusername/data-quality-monitor.git
+cd data-quality-monitor
+```
 
-git clone https://github.com/yourusername/data-quality-monitor.git  
-cd data-quality-monitor  
+### 2. Create a virtual environment
+```bash
+python3 -m venv venv
+```
 
----
+### 3. Activate the environment
 
-### 2. Install dependencies
+Linux / Mac:
+```bash
+source venv/bin/activate
+```
 
-pip install -r requirements.txt  
+Windows:
+```bash
+venv\Scripts\activate
+```
 
----
+### 4. Install dependencies
+```bash
+pip install -r requirements.txt
+```
 
-### 3. Run the project
-
-python main.py --config configs/config.yaml  
-
----
+### 5. Run the project
+```bash
+python main.py
+```
 
 ## ⚙️ How It Works
 
