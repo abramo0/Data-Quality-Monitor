@@ -4,6 +4,6 @@ class DriftDetector:
 
     def analyze(self):
         return {
-            "columns": len(self.df.columns),
             "rows": len(self.df),
+            "columns": len(self.df.columns)
         }
