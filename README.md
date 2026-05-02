@@ -48,7 +48,7 @@ Current validation layer:
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/data-quality-monitor.git
+git clone https://github.com/abramo0/Data-Quality-Monitor
 cd data-quality-monitor
 ```
 
