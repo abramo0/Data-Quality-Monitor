@@ -1,8 +1,11 @@
 import argparse
+from src.utils.logger import get_logger
 
 from src.core.loader import DataLoader
 from src.core.validator import validate
 from src.report.generator import ReportGenerator
+
+logger = get_logger()
 
 
 def parse_args():
@@ -14,17 +17,21 @@ def parse_args():
 def main():
     args = parse_args()
 
+    logger.info("Starting Data Quality Monitor...")
+
     loader = DataLoader(args.file)
     df = loader.load_csv()
 
     if df is None:
-        print("[ERROR] Loading failed")
+        logger.error("Loading failed. Exiting...")
         return
 
     results = validate(df)
 
     report = ReportGenerator(results)
     report.print_report()
+
+    logger.info("Execution completed successfully")
 
 
 if __name__ == "__main__":
