@@ -1,5 +1,6 @@
 from src.metrics.missing import MissingValuesChecker
-from src.metrics.outliers import OutlierCheck
+from src.metrics.outliers import OutlierChecker
+from src.metrics.schema import SchemaChecker
 from src.core.drift import DriftDetector
 
 
@@ -11,14 +12,13 @@ def validate(df):
     results["missing"] = missing.analyze()
     results["missing_summary"] = missing.summary()
 
-    # Outliers (multi-column fix)
-    outlier_results = {}
+    # Outliers
+    outliers = OutlierChecker(df)
+    results["outliers"] = outliers.analyze()
 
-    for col in df.select_dtypes(include="number").columns:
-        checker = OutlierCheck(col)
-        outlier_results[col] = checker.run(df)
-
-    results["outliers"] = outlier_results
+    # Schema (NUOVO)
+    schema = SchemaChecker(df)
+    results["schema"] = schema.analyze()
 
     # Drift
     drift = DriftDetector(df)
