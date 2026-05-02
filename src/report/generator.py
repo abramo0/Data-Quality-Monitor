@@ -37,3 +37,11 @@ class ReportGenerator:
             print(f"{k}: {v}")
 
         print("\n" + "=" * 60)
+
+        # SCHEMA
+        print("\n📌 SCHEMA\n" + "-" * 60)
+        print(f"{'Column':<15}{'Type':<15}{'Numeric'}")
+        print("-" * 60)
+        
+        for col, val in self.results["schema"].items():
+            print(f"{col:<15}{val['dtype']:<15}{val['is_numeric']}")
