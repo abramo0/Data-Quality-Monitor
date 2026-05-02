@@ -7,21 +7,33 @@ class ReportGenerator:
         print("📊 DATA QUALITY REPORT")
         print("=" * 60)
 
-        print("\n📌 MISSING VALUES\n" + "-" * 60)
+        # MISSING
+        print("\n📌 MISSING VALUES")
+        print("-" * 60)
+
         print(f"{'Column':<15}{'Missing':<10}{'Percentage':<15}{'Status'}")
         print("-" * 60)
 
         for col, val in self.results["missing"].items():
-            count = val["missing_count"]
-            perc = val["missing_percentage"]
+            status = "OK" if val["missing_percentage"] == 0 else "WARNING"
+            print(f"{col:<15}{val['missing_count']:<10}{val['missing_percentage']:<15}% {status}")
 
-            status = "OK" if perc == 0 else "WARNING"
+        m = self.results["missing_summary"]
+        print("\nTOTAL:", m["total_missing_values"], " | RATE:", m["missing_rate"], "%")
 
-            print(f"{col:<15}{count:<10}{perc:<15}% {status}")
+        # OUTLIERS
+        print("\n📌 OUTLIERS")
+        print("-" * 60)
 
-        summary = self.results["missing_summary"]
+        for col, val in self.results["outliers"].items():
+            status = val["status"]
+            print(f"{col:<15}{val['outliers']:<10}{val['outlier_ratio']*100:.2f}% {status}")
 
-        print("\n" + "-" * 60)
-        print(f"TOTAL MISSING VALUES: {summary['total_missing_values']}")
-        print(f"OVERALL MISSING RATE: {summary['missing_rate']}%")
-        print("=" * 60 + "\n")
+        # DRIFT
+        print("\n📌 DRIFT")
+        print("-" * 60)
+
+        for k, v in self.results["drift"].items():
+            print(f"{k}: {v}")
+
+        print("\n" + "=" * 60)
