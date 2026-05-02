@@ -16,7 +16,7 @@ def validate(df):
     outliers = OutlierChecker(df)
     results["outliers"] = outliers.analyze()
 
-    # Schema (NUOVO)
+    # Schema
     schema = SchemaChecker(df)
     results["schema"] = schema.analyze()
 
