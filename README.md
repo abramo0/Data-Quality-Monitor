@@ -87,13 +87,13 @@ pip install -r requirements.txt
 You must provide a CSV file path:
 
 ```bash
-python main.py --file data/raw/data.csv
+python3 main.py --file data/raw/data.csv
 ```
 
 or:
 
 ```bash
-python main.py --file /home/user/Desktop/file.csv
+python3 main.py --file /home/user/Desktop/file.csv
 ```
 
 ---
