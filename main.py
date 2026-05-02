@@ -4,6 +4,7 @@ from src.utils.logger import get_logger
 from src.core.loader import DataLoader
 from src.core.validator import validate
 from src.report.generator import ReportGenerator
+from src.core.score import DataQualityScore
 
 logger = get_logger()
 
