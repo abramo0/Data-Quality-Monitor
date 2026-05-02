@@ -25,9 +25,19 @@ class OutlierChecker:
 
             outliers = series[(series < lower) | (series > upper)]
 
+            total = len(series)
+            outlier_count = len(outliers)
+            outlier_ratio = outlier_count / total if total > 0 else 0
+
             report[col] = {
-                "outlier_count": int(len(outliers)),
-                "outlier_percentage": round(len(outliers) / len(series) * 100, 2)
+                "check": "outliers",
+                "column": col,
+                "status": "PASS" if outlier_ratio == 0 else "WARN",
+                "total_values": total,
+                "outliers": outlier_count,
+                "outlier_ratio": round(outlier_ratio, 4),
+                "lower_bound": lower,
+                "upper_bound": upper
             }
 
         return report
