@@ -1,27 +1,50 @@
 from src.metrics.missing import MissingValuesChecker
-from src.metrics.outliers import OutlierChecker
+from src.metrics.outliers import OutlierCheck
 from src.metrics.schema import SchemaChecker
 from src.core.drift import DriftDetector
 
 
 def validate(df):
-    results = {}
+    """
+    Central validation pipeline.
+    Returns a unified results dictionary (data contract).
+    """
 
-    # Missing
-    missing = MissingValuesChecker(df)
-    results["missing"] = missing.analyze()
-    results["missing_summary"] = missing.summary()
+    results = {
+        "missing": {},
+        "outliers": {},
+        "schema": {},
+        "drift": {},
+        "final_score": None,
+        "final_status": None
+    }
 
-    # Outliers
-    outliers = OutlierChecker(df)
-    results["outliers"] = outliers.analyze()
+    # --------------------------
+    # 1. MISSING VALUES
+    # --------------------------
+    missing_checker = MissingValuesChecker(df)
+    results["missing"] = missing_checker.analyze()
+    results["missing_summary"] = missing_checker.summary()
 
-    # Schema
-    schema = SchemaChecker(df)
-    results["schema"] = schema.analyze()
+    # --------------------------
+    # 2. OUTLIERS (ALL NUMERIC COLS)
+    # --------------------------
+    results["outliers"] = {}
 
-    # Drift
-    drift = DriftDetector(df)
-    results["drift"] = drift.analyze()
+    for col in df.select_dtypes(include=["number"]).columns:
+        checker = OutlierCheck(col)
+        results["outliers"][col] = checker.run(df)
+
+    # --------------------------
+    # 3. SCHEMA VALIDATION
+    # --------------------------
+    schema_checker = SchemaChecker(df)
+    results["schema"] = schema_checker.analyze()
+
+    # --------------------------
+    # 4. DRIFT (basic version)
+    # --------------------------
+    drift_detector = DriftDetector(df)
+    results["drift"] = drift_detector.analyze()
 
     return results
