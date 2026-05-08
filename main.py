@@ -11,7 +11,15 @@ logger = get_logger()
 
 def parse_args():
     parser = argparse.ArgumentParser()
+
     parser.add_argument("--file", required=True)
+
+    parser.add_argument(
+        "--export",
+        required=False,
+        help="Export report to JSON file"
+    )
+
     return parser.parse_args()
 
 
@@ -20,7 +28,6 @@ def main():
 
     logger.info("Starting Data Quality Monitor...")
 
-    # Load
     loader = DataLoader(args.file)
     df = loader.load_csv()
 
@@ -28,21 +35,24 @@ def main():
         logger.error("Loading failed. Exiting...")
         return
 
-    # Validate
     results = validate(df)
 
-    # Score (QUI è la novità)
+    # SCORE
     score_engine = DataQualityScore(results)
     score = score_engine.compute()
     status = score_engine.status(score)
 
-    # Report
+    results["final_score"] = score
+    results["final_status"] = status
+
+    # REPORT
     report = ReportGenerator(results)
     report.print_report()
 
-    # Output finale
-    print(f"\n⭐ FINAL SCORE: {score}/100")
-    print(f"📊 STATUS: {status}")
+    # EXPORT JSON
+    if args.export:
+        report.export_json(args.export)
+        logger.info(f"Report exported to {args.export}")
 
     logger.info("Execution completed successfully")
 
