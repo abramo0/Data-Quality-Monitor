@@ -1,5 +1,3 @@
-import jason
-
 class ReportGenerator:
     def __init__(self, results):
         self.results = results
