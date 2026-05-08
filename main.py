@@ -1,23 +1,32 @@
 import argparse
-from src.utils.logger import get_logger
 
 from src.core.loader import DataLoader
 from src.core.validator import validate
 from src.core.score import DataQualityScore
-from src.report.generator import ReportGenerator
 
-logger = get_logger()
+from src.report.generator import ReportGenerator
+from src.report.html_generator import HTMLReportGenerator
 
 
 def parse_args():
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description="Data Quality Monitor")
 
-    parser.add_argument("--file", required=True)
+    parser.add_argument(
+        "--file",
+        required=True,
+        help="Path to the CSV file"
+    )
 
     parser.add_argument(
         "--export",
         required=False,
-        help="Export report to JSON file"
+        help="Export JSON report path (e.g. report.json)"
+    )
+
+    parser.add_argument(
+        "--html",
+        required=False,
+        help="Export HTML report path (e.g. report.html)"
     )
 
     return parser.parse_args()
@@ -26,18 +35,18 @@ def parse_args():
 def main():
     args = parse_args()
 
-    logger.info("Starting Data Quality Monitor...")
-
+    # 1. LOAD DATA
     loader = DataLoader(args.file)
     df = loader.load_csv()
 
     if df is None:
-        logger.error("Loading failed. Exiting...")
+        print("[ERROR] Failed to load dataset.")
         return
 
+    # 2. VALIDATION
     results = validate(df)
 
-    # SCORE
+    # 3. SCORE
     score_engine = DataQualityScore(results)
     score = score_engine.compute()
     status = score_engine.status(score)
@@ -45,16 +54,20 @@ def main():
     results["final_score"] = score
     results["final_status"] = status
 
-    # REPORT
+    # 4. TERMINAL REPORT
     report = ReportGenerator(results)
     report.print_report()
 
-    # EXPORT JSON
+    # 5. JSON EXPORT (optional)
     if args.export:
         report.export_json(args.export)
-        logger.info(f"Report exported to {args.export}")
 
-    logger.info("Execution completed successfully")
+    # 6. HTML EXPORT (optional)
+    if args.html:
+        html_report = HTMLReportGenerator(results)
+        html_report.generate(args.html)
+
+    print("\n[INFO] Process completed successfully.")
 
 
 if __name__ == "__main__":
