@@ -26,10 +26,11 @@ def validate(df):
     results["missing_summary"] = missing_checker.summary()
 
     # --------------------------
-    # 2. OUTLIERS (ALL NUMERIC COLS)
+    # OUTLIERS
     # --------------------------
-    results["outliers"] = {}
-
+    outlier_checker = OutlierChecker(df)
+    results["outliers"] = outlier_checker.analyze()
+    
     for col in df.select_dtypes(include=["number"]).columns:
         checker = OutlierChecker(df)
         results["outliers"] = checker.analyze()
