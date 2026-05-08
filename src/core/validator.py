@@ -31,7 +31,7 @@ def validate(df):
     results["outliers"] = {}
 
     for col in df.select_dtypes(include=["number"]).columns:
-        checker = OutlierCheck(col)
+        checker = OutlierChecker(col)
         results["outliers"][col] = checker.run(df)
 
     # --------------------------
