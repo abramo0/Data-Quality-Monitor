@@ -6,6 +6,7 @@ class HTMLReportGenerator:
         self.results = results
 
     def generate(self, output_path="report.html"):
+
         html = f"""
         <html>
         <head>
@@ -47,11 +48,16 @@ class HTMLReportGenerator:
         <div class="card">
             <h2>⭐ Score</h2>
             <h3>{self.results.get("final_score", "N/A")} / 100</h3>
-            <h3 class="{self.results.get("final_status", "").lower()}">
+            <h3 class="{str(self.results.get("final_status", "")).lower()}">
                 {self.results.get("final_status", "UNKNOWN")}
             </h3>
         </div>
+        """
 
+        # --------------------------
+        # MISSING VALUES
+        # --------------------------
+        html += """
         <div class="card">
             <h2>❌ Missing Values</h2>
             <table>
@@ -62,8 +68,8 @@ class HTMLReportGenerator:
             html += f"""
                 <tr>
                     <td>{col}</td>
-                    <td>{val['missing_count']}</td>
-                    <td>{val['missing_percentage']}%</td>
+                    <td>{val.get('missing_count', 0)}</td>
+                    <td>{val.get('missing_percentage', 0)}%</td>
                 </tr>
             """
 
@@ -72,6 +78,9 @@ class HTMLReportGenerator:
         </div>
         """
 
+        # --------------------------
+        # OUTLIERS
+        # --------------------------
         html += """
         <div class="card">
             <h2>📊 Outliers</h2>
@@ -83,35 +92,47 @@ class HTMLReportGenerator:
             html += f"""
                 <tr>
                     <td>{col}</td>
-                    <td>{val['outliers']}</td>
-                    <td>{round(val['outlier_ratio'] * 100, 2)}%</td>
-                    <td>{val['status']}</td>
+                    <td>{val.get('outliers', 0)}</td>
+                    <td>{round(val.get('outlier_ratio', 0) * 100, 2)}%</td>
+                    <td>{val.get('status', 'UNKNOWN')}</td>
                 </tr>
             """
 
         html += """
             </table>
         </div>
+        """
 
+        # --------------------------
+        # SCHEMA (FIX IMPORTANTISSIMO)
+        # --------------------------
+        html += """
         <div class="card">
             <h2>🧠 Schema</h2>
             <table>
                 <tr><th>Column</th><th>Type</th><th>Numeric</th></tr>
         """
 
-        for col, val in self.results.get("schema", {}).items():
+        schema = self.results.get("schema", {}).get("columns", {})
+
+        for col, val in schema.items():
             html += f"""
                 <tr>
                     <td>{col}</td>
-                    <td>{val['dtype']}</td>
-                    <td>{val['is_numeric']}</td>
+                    <td>{val.get('dtype', 'unknown')}</td>
+                    <td>{val.get('is_numeric', False)}</td>
                 </tr>
             """
 
         html += """
             </table>
         </div>
+        """
 
+        # --------------------------
+        # SAVE FILE
+        # --------------------------
+        html += """
         </body>
         </html>
         """
