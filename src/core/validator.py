@@ -31,9 +31,8 @@ def validate(df):
     results["outliers"] = {}
 
     for col in df.select_dtypes(include=["number"]).columns:
-        checker = OutlierChecker(col)
-        results["outliers"][col] = checker.run(df)
-
+        checker = OutlierChecker(df)
+        results["outliers"] = checker.analyze()
     # --------------------------
     # 3. SCHEMA VALIDATION
     # --------------------------
