@@ -4,103 +4,128 @@ A lightweight Python CLI tool to automatically detect data quality issues in CSV
 
 ---
 
-## 🚀 Overview
+# 🚀 Overview
 
-Data Quality Monitor is a simple but extensible data validation tool designed to analyze CSV datasets and generate structured quality reports directly in the terminal.
+Data Quality Monitor is a modular and extensible data validation tool designed to analyze CSV datasets and generate structured quality reports directly in the terminal or exported as JSON reports.
 
-It helps ensure datasets are clean and usable before entering downstream data processing or ML pipelines.
-
----
-
-## 🎯 Why This Project Matters
-
-Poor data quality is one of the most common causes of failure in data pipelines and machine learning models.
-
-This tool helps to:
-
-- Detect missing data early  
-- Standardize dataset validation workflows  
-- Improve data reliability  
-- Provide quick dataset insights via CLI  
+It helps ensure datasets are clean, consistent, and reliable before entering downstream data engineering or machine learning workflows.
 
 ---
 
-## ⚙️ Features
+# 🎯 Why This Project Matters
 
-- 📥 Load CSV datasets from local path or CLI input  
-- ❌ Missing values detection per column  
-- 📊 Validation pipeline structure  
-- 🧾 Clean and readable console reports  
-- 🧠 Modular architecture for future extensions  
+Poor data quality is one of the most common causes of failure in data pipelines and machine learning systems.
 
----
+This project helps to:
 
-## 🧱 Architecture
-
-CSV → Data Loader → Validator → Report Generator → Console Output
-
-Current validation layer:
-- Missing Values Check  
+- Detect missing or inconsistent data early
+- Improve dataset reliability
+- Standardize validation workflows
+- Identify anomalies before production
+- Generate automated quality reports
 
 ---
 
-## 🚀 Quick Start
+# ⚙️ Features
 
-### 1. Clone the repository
-```bash
-git clone https://github.com/abramo0/Data-Quality-Monitor
-cd data-quality-monitor
+- 📥 CSV dataset loading from CLI
+- ❌ Missing values detection
+- 📊 Outlier detection using IQR
+- 🧠 Schema validation
+- 📈 Basic drift analysis
+- ⭐ Data quality scoring system (0–100)
+- 🧾 Structured console reports
+- 📄 JSON report export
+- 🪵 Logging system
+- 🧪 Unit testing support
+- 🧱 Modular architecture
+
+---
+
+# 🧱 Architecture
+
+```text
+CSV
+ ↓
+Data Loader
+ ↓
+Validator
+ ├── Missing Values Check
+ ├── Outlier Detection
+ ├── Schema Validation
+ └── Drift Analysis
+ ↓
+Scoring Engine
+ ↓
+Report Generator
+ ↓
+Console Output / JSON Export
 ```
 
 ---
 
-### 2. Create a virtual environment
+# 🚀 Quick Start
+
+## 1. Clone the repository
+
+```bash
+git clone https://github.com/abramo0/Data-Quality-Monitor.git
+cd Data-Quality-Monitor
+```
+
+---
+
+## 2. Create a virtual environment
+
 ```bash
 python3 -m venv venv
 ```
 
 ---
 
-### 3. Activate the environment
+## 3. Activate the environment
 
-Linux / Mac:
+### Linux / Mac
+
 ```bash
 source venv/bin/activate
 ```
 
-Windows:
+### Windows
+
 ```bash
 venv\Scripts\activate
 ```
 
 ---
 
-### 4. Install dependencies
+## 4. Install dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
 
 ---
 
-### 5. Run the project
+## 5. Run the project
 
-You must provide a CSV file path:
+### Analyze a dataset
 
 ```bash
 python3 main.py --file data/raw/data.csv
 ```
 
-or:
+### Analyze a dataset and export JSON report
 
 ```bash
-python3 main.py --file /home/user/Desktop/file.csv
+python3 main.py --file data/raw/data.csv --export report.json
 ```
 
 ---
 
-## 📊 Example Output
+# 📊 Example Output
 
-```
+```text
 ============================================================
 📊 DATA QUALITY REPORT
 ============================================================
@@ -112,35 +137,55 @@ Column         Missing   Percentage     Status
 name           0         0.0%           OK
 age            1         33.33%         WARNING
 
+📌 OUTLIERS
 ------------------------------------------------------------
-TOTAL MISSING VALUES: 1
-OVERALL MISSING RATE: 16.67%
+Column         Outliers  Ratio          Status
+------------------------------------------------------------
+salary         2         5.20%          WARN
+
+📌 SCHEMA
+------------------------------------------------------------
+Column         Type            Numeric
+------------------------------------------------------------
+name           object          False
+salary         int64           True
+
+📌 DRIFT
+------------------------------------------------------------
+columns: 2
+rows: 100
+
+============================================================
+⭐ FINAL SCORE: 87.4/100
+📊 STATUS: GOOD
 ============================================================
 ```
 
 ---
 
-## 📁 Project Structure
+# 📁 Project Structure
 
-```
+```text
 data-quality-monitor/
 │
 ├── src/
 │   ├── core/
 │   │   ├── loader.py
 │   │   ├── validator.py
+│   │   ├── drift.py
+│   │   └── score.py
 │   │
 │   ├── metrics/
 │   │   ├── missing.py
 │   │   ├── outliers.py
-│   │   ├── schema.py
+│   │   └── schema.py
 │   │
 │   ├── report/
-│   │   ├── generator.py
+│   │   └── generator.py
 │   │
 │   ├── utils/
-│       ├── config.py
-│       ├── logger.py
+│   │   ├── config.py
+│   │   └── logger.py
 │
 ├── data/
 │   ├── raw/
@@ -153,6 +198,10 @@ data-quality-monitor/
 │   └── exploration.ipynb
 │
 ├── tests/
+│   ├── test_loader.py
+│   ├── test_missing.py
+│   ├── test_outliers.py
+│   └── test_validator.py
 │
 ├── main.py
 ├── requirements.txt
@@ -161,46 +210,58 @@ data-quality-monitor/
 
 ---
 
-## 🛠️ Tech Stack
+# 🛠️ Tech Stack
 
-- Python  
-- Pandas  
-- argparse (CLI handling)  
-
----
-
-## 🚀 Future Improvements
-
-- Outlier detection (IQR method)  
-- Schema validation  
-- Data drift detection  
-- JSON / HTML report export  
-- Streamlit dashboard  
-- Data quality scoring system (0–100)  
-- API layer with FastAPI  
+- Python
+- Pandas
+- argparse
+- logging
+- pytest
 
 ---
 
-## 🤝 Contributing
+# 🧪 Running Tests
+
+Run all tests using:
+
+```bash
+pytest
+```
+
+---
+
+# 🚀 Future Improvements
+
+- HTML report export
+- Interactive Streamlit dashboard
+- Configurable validation thresholds
+- Advanced drift detection
+- FastAPI integration
+- Docker support
+- CI/CD with GitHub Actions
+
+---
+
+# 🤝 Contributing
 
 Contributions are welcome. Feel free to fork the repository and submit pull requests.
 
 ---
 
-## 📄 License
+# 📄 License
 
 MIT License
 
 ---
 
-## 👨‍💻 Author
+# 👨‍💻 Author
 
 Abramo Azer  
 Aspiring Data Engineer & AI Engineer  
-Focused on building scalable data systems and ML pipelines  
+Focused on building scalable data systems and machine learning pipelines.
 
 ---
 
-## 📌 Status
+# 📌 Status
 
-Active development — core pipeline (loading → validation → reporting) is implemented
+Active development — modular validation pipeline and scoring system implemented.
