@@ -1,4 +1,5 @@
 from src.metrics.missing import MissingValuesChecker
+from src.metrics.schema import SchemaChecker
 from src.metrics.outliers import OutlierChecker
 from src.core.drift import DriftDetector
 
