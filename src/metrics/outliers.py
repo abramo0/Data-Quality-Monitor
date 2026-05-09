@@ -1,6 +1,6 @@
 import pandas as pd
 
-from src.utils.config import load_config
+from src.utils.config_py import load_config
 
 
 class OutlierChecker:
