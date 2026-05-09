@@ -118,17 +118,41 @@ STATUS: GOOD
 ```text
 data-quality-monitor/
 ├── src/
-│   ├── core/           # Core logic (loader, validator, drift, score)
-│   ├── metrics/        # Specific checkers (missing, outliers, schema)
-│   ├── report/         # Report generation logic
-│   └── utils/          # Configurations and logger
-├── data/               # Raw and processed datasets
-├── configs/            # YAML configuration files
-├── tests/              # Test suite (unit, integration, regression)
-├── main.py             # Application entry point
-└── requirements.txt    # Python dependencies
-```
-
+│   ├── core/           
+│   │   ├── loader.py        # Data loading utilities
+│   │   ├── validator.py     # Main validation pipeline
+│   │   ├── drift.py         # Data drift detection logic
+│   │   └── score.py         # Data quality scoring engine
+│
+│   ├── metrics/        
+│   │   ├── missing.py       # Missing values analysis
+│   │   ├── outliers.py      # Outlier detection (IQR method)
+│   │   └── schema.py        # Schema validation (dtype checks)
+│
+│   ├── report/         
+│   │   ├── generator.py     # Console + JSON report generation
+│   │   └── html_generator.py # HTML report rendering
+│
+│   └── utils/          
+│       ├── config.py        # YAML configuration loader
+│       └── logger.py        # Logging utilities
+│
+├── data/
+│   ├── raw/               # Raw input datasets
+│   └── processed/        # Cleaned/processed datasets
+│
+├── configs/
+│   └── config.yaml       # Thresholds and global settings
+│
+├── tests/
+│   ├── unit/             # Unit tests for each module
+│   ├── integration/      # Full pipeline tests
+│   ├── regression/       # Prevent score/logic regression
+│   └── fixtures/         # Sample datasets for testing
+│
+├── main.py               # CLI entry point
+├── requirements.txt      # Dependencies
+└── README.md
 ---
 
 ## 🛠️ Tech Stack
@@ -137,6 +161,8 @@ data-quality-monitor/
 *   **CLI:** Argparse
 *   **Testing:** Pytest
 *   **Reporting:** Jinja2, Logging
+
+---
 
 ---
 
