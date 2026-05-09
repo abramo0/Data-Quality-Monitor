@@ -22,7 +22,7 @@ def validate(df):
     # --------------------------
     # 1. MISSING VALUES
     # --------------------------
-    missing_checker = MissingValuesChecker(df)
+    missing_checker = MissingChecker(df)
     results["missing"] = missing_checker.analyze()
     results["missing_summary"] = missing_checker.summary()
 
