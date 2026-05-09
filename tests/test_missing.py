@@ -1,5 +1,5 @@
 import pandas as pd
-from src.metrics.missing import MissingValuesChecker
+from src.metrics.missing import MissingChecker
 
 
 def test_missing_values():
