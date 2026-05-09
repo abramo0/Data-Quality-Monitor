@@ -181,7 +181,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 **Abramo Azer**
 *Aspiring Data Engineer & AI Engineer*
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Profile-blue?style=flat&logo=linkedin)](www.linkedin.com/in/abramo-azer-229610299)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Profile-blue?style=flat&logo=linkedin)](https://www.linkedin.com/in/abramo-azer-229610299/)
 [![GitHub](https://img.shields.io/badge/GitHub-Profile-lightgrey?style=flat&logo=github)](https://github.com/abramo0)
 
 ---
