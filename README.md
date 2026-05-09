@@ -153,6 +153,8 @@ data-quality-monitor/
 ├── main.py               # CLI entry point
 ├── requirements.txt      # Dependencies
 └── README.md
+
+```
 ---
 
 ## 🛠️ Tech Stack
