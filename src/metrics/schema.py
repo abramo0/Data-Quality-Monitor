@@ -7,26 +7,55 @@ class SchemaChecker:
 
     def analyze(self):
         report = {}
-        issues = 0
 
         for col in self.df.columns:
+
             series = self.df[col]
 
+            # --------------------------
+            # Base metadata
+            # --------------------------
+
             dtype = str(series.dtype)
+
             is_numeric = pd.api.types.is_numeric_dtype(series)
 
             status = "OK"
 
+            # --------------------------
+            # Rule 1:
+            # Fully empty column
+            # --------------------------
+
             if series.isnull().all():
+
                 status = "BAD"
-                issues += 1
 
-            elif series.dtype == "object":
-                numeric_like = pd.to_numeric(series, errors="coerce").notnull().mean()
+            # --------------------------
+            # Rule 2:
+            # Numeric-like object column
+            # Example:
+            # ["1", "2", "3"]
+            # --------------------------
 
-                if numeric_like > 0.8:
+            elif dtype == "object":
+
+                numeric_like_ratio = (
+                    pd.to_numeric(
+                        series,
+                        errors="coerce"
+                    )
+                    .notnull()
+                    .mean()
+                )
+
+                if numeric_like_ratio > 0.8:
+
                     status = "WARNING"
-                    issues += 1
+
+            # --------------------------
+            # Store results
+            # --------------------------
 
             report[col] = {
                 "dtype": dtype,
@@ -34,5 +63,4 @@ class SchemaChecker:
                 "status": status
             }
 
-        # ✅ FIX IMPORTANTE: ritorno compatibile con i test
         return report
