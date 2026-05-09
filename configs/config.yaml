@@ -1,0 +1,9 @@
+missing_threshold: 15
+
+outlier:
+  iqr_multiplier: 1.5
+  warning_ratio: 5
+
+score:
+  missing_weight: 0.5
+  outlier_weight: 0.3
