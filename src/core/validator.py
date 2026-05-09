@@ -27,7 +27,7 @@ def validate(df):
     scorer = DataQualityScore(results)
     score = scorer.compute()
 
-    results["score"] = score
+    results["final_score"] = score
     results["final_status"] = scorer.status(score)
 
     return results
