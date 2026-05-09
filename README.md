@@ -29,13 +29,13 @@ Poor data quality is the leading cause of failure in ML systems. This tool helps
 
 ## ⚙️ Key Features
 
-| Feature | Description |
-| :--- | :--- |
-| **Checkers** | Missing values detection and Outlier detection (IQR method). |
-| **Validation** | Schema validation (dtypes) and basic Data Drift analysis. |
-| **Reporting** | Structured console output, JSON export, and interactive HTML reports. |
-| **Architecture** | Modular plugin system with an integrated Scoring Engine (0-100). |
-| **Reliability** | Full test suite including Unit, Integration, and Regression tests. |
+| Component   | Description |
+|------------|-------------|
+| **Metrics Engine** | Missing value detection and outlier detection using the IQR method |
+| **Validation Layer** | Schema validation (data types) and basic data drift analysis |
+| **Reporting System** | Structured console output with JSON and HTML report generation |
+| **Architecture** | Modular and extensible design with a centralized scoring engine (0–100) |
+| **Testing Suite** | Full coverage with unit, integration, and regression tests |
 
 ---
 
