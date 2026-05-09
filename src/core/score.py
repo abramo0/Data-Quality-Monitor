@@ -5,25 +5,16 @@ class DataQualityScore:
     def compute(self):
         score = 100
 
-        # --------------------
-        # Missing penalty
-        # --------------------
         missing_rate = self.results.get("missing_summary", {}).get("missing_rate", 0)
         score -= missing_rate * 0.5
 
-        # --------------------
-        # Outliers penalty
-        # --------------------
         outliers = self.results.get("outliers", {})
 
         for col, val in outliers.items():
             ratio = val.get("outlier_ratio", 0)
-            score -= ratio * 100 * 0.3   # convert to %
+            score -= ratio * 100 * 0.3
 
-        # clamp
-        score = max(0, round(score, 2))
-
-        return score
+        return max(0, round(score, 2))
 
     def status(self, score):
         if score >= 85:
@@ -32,3 +23,13 @@ class DataQualityScore:
             return "WARNING"
         else:
             return "BAD"
+
+
+# 👇 WRAPPER per compatibilità test
+def compute_score(missing=0, outliers=0, schema_issues=0):
+    score = 100
+    score -= missing * 0.5
+    score -= outliers * 0.3
+    score -= schema_issues * 5
+
+    return max(0, min(100, round(score, 2)))
