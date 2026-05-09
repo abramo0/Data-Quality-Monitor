@@ -164,7 +164,6 @@ data-quality-monitor/
 *   **Testing:** Pytest
 *   **Reporting:** Jinja2, Logging
 
----
 
 ---
 
