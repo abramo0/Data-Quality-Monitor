@@ -7,7 +7,7 @@ def test_missing_values():
         "age": [10, None, 30]
     })
 
-    checker = MissingValuesChecker(df)
+    checker = MissingChecker(df)
     result = checker.analyze()
 
     assert result["age"]["missing_count"] == 1
