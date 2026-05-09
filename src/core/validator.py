@@ -11,7 +11,7 @@ def validate(df):
     # --------------------
     # METRICS
     # --------------------
-    missing_checker = MissingValuesChecker(df)
+    missing_checker = MissingsChecker(df)
     results["missing"] = missing_checker.analyze()
     results["missing_summary"] = missing_checker.summary()
 
