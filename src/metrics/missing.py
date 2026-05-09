@@ -1,43 +1,49 @@
 import pandas as pd
+from src.utils.config import load_config
 
 
-class MissingValuesChecker:
+class MissingChecker:
     def __init__(self, df: pd.DataFrame):
-        self.df = df            # Input dataset to be analyzed
+        self.df = df
 
     def analyze(self):
-        """
-        Computes missing values statistics for each column.
+        config = load_config()
 
-        Returns:
-            dict: A dictionary containing missing value count and percentage per column.
-        """
+        threshold = config["missing_threshold"]
 
-        missing_count = self.df.isnull().sum()            # Count missing values per column
-        missing_percentage = (missing_count / len(self.df)) * 100            # Compute missing value percentage per column
-        report = {}            # Dictionary to store per-column results
+        missing_count = self.df.isnull().sum()
+        missing_percentage = (missing_count / len(self.df)) * 100
 
-        # Build structured report for each column
+        report = {}
+
         for column in self.df.columns:
+
+            percentage = round(missing_percentage[column], 2)
+
+            status = (
+                "OK"
+                if percentage <= threshold
+                else "WARNING"
+            )
+
             report[column] = {
                 "missing_count": int(missing_count[column]),
-                "missing_percentage": round(missing_percentage[column], 2)
+                "missing_percentage": percentage,
+                "status": status
             }
 
         return report
 
     def summary(self):
-        """
-        Computes overall missing values statistics for the entire dataset.
+        total_missing = self.df.isnull().sum().sum()
 
-        Returns:
-            dict: Total missing values and overall missing rate.
-        """
+        total_cells = self.df.shape[0] * self.df.shape[1]
 
-        total_missing = self.df.isnull().sum().sum()            # Total number of missing values in the dataset
-        total_cells = self.df.shape[0] * self.df.shape[1]            # Total number of cells in the dataset
-        missing_rate = (total_missing / total_cells) * 100 if total_cells > 0 else 0            # Overall missing rate
-        
+        missing_rate = (
+            (total_missing / total_cells) * 100
+            if total_cells > 0 else 0
+        )
+
         return {
             "total_missing_values": int(total_missing),
             "missing_rate": round(missing_rate, 2)
